@@ -1,0 +1,613 @@
+{
+	"folders": [
+		{
+			"name": "SkatePark",
+			"path": "."
+		},
+		{
+			"name": "UE5",
+			"path": "D:\\Epic Games\\UE_5.4"
+		}
+	],
+	"settings": {
+		"typescript.tsc.autoDetect": "off",
+		"npm.autoDetect": "off"
+	},
+	"extensions": {
+		"recommendations": [
+			"ms-vscode.cpptools",
+			"ms-dotnettools.csharp"
+		]
+	},
+	"tasks": {
+		"version": "2.0.0",
+		"tasks": [
+			{
+				"label": "SkatePark Win64 Debug Build",
+				"group": "build",
+				"command": "Engine\\Build\\BatchFiles\\Build.bat",
+				"args": [
+					"SkatePark",
+					"Win64",
+					"Debug",
+					"C:\\Users\\Pc\\Documents\\Unreal Projects\\SkatePark\\SkatePark.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "D:\\Epic Games\\UE_5.4"
+				}
+			},
+			{
+				"label": "SkatePark Win64 Debug Rebuild",
+				"group": "build",
+				"command": "Engine\\Build\\BatchFiles\\Build.bat",
+				"args": [
+					"SkatePark",
+					"Win64",
+					"Debug",
+					"C:\\Users\\Pc\\Documents\\Unreal Projects\\SkatePark\\SkatePark.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"SkatePark Win64 Debug Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "D:\\Epic Games\\UE_5.4"
+				}
+			},
+			{
+				"label": "SkatePark Win64 Debug Clean",
+				"group": "build",
+				"command": "Engine\\Build\\BatchFiles\\Clean.bat",
+				"args": [
+					"SkatePark",
+					"Win64",
+					"Debug",
+					"C:\\Users\\Pc\\Documents\\Unreal Projects\\SkatePark\\SkatePark.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "D:\\Epic Games\\UE_5.4"
+				}
+			},
+			{
+				"label": "SkatePark Win64 DebugGame Build",
+				"group": "build",
+				"command": "Engine\\Build\\BatchFiles\\Build.bat",
+				"args": [
+					"SkatePark",
+					"Win64",
+					"DebugGame",
+					"C:\\Users\\Pc\\Documents\\Unreal Projects\\SkatePark\\SkatePark.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "D:\\Epic Games\\UE_5.4"
+				}
+			},
+			{
+				"label": "SkatePark Win64 DebugGame Rebuild",
+				"group": "build",
+				"command": "Engine\\Build\\BatchFiles\\Build.bat",
+				"args": [
+					"SkatePark",
+					"Win64",
+					"DebugGame",
+					"C:\\Users\\Pc\\Documents\\Unreal Projects\\SkatePark\\SkatePark.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"SkatePark Win64 DebugGame Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "D:\\Epic Games\\UE_5.4"
+				}
+			},
+			{
+				"label": "SkatePark Win64 DebugGame Clean",
+				"group": "build",
+				"command": "Engine\\Build\\BatchFiles\\Clean.bat",
+				"args": [
+					"SkatePark",
+					"Win64",
+					"DebugGame",
+					"C:\\Users\\Pc\\Documents\\Unreal Projects\\SkatePark\\SkatePark.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "D:\\Epic Games\\UE_5.4"
+				}
+			},
+			{
+				"label": "SkatePark Win64 Development Build",
+				"group": "build",
+				"command": "Engine\\Build\\BatchFiles\\Build.bat",
+				"args": [
+					"SkatePark",
+					"Win64",
+					"Development",
+					"C:\\Users\\Pc\\Documents\\Unreal Projects\\SkatePark\\SkatePark.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "D:\\Epic Games\\UE_5.4"
+				}
+			},
+			{
+				"label": "SkatePark Win64 Development Rebuild",
+				"group": "build",
+				"command": "Engine\\Build\\BatchFiles\\Build.bat",
+				"args": [
+					"SkatePark",
+					"Win64",
+					"Development",
+					"C:\\Users\\Pc\\Documents\\Unreal Projects\\SkatePark\\SkatePark.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"SkatePark Win64 Development Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "D:\\Epic Games\\UE_5.4"
+				}
+			},
+			{
+				"label": "SkatePark Win64 Development Clean",
+				"group": "build",
+				"command": "Engine\\Build\\BatchFiles\\Clean.bat",
+				"args": [
+					"SkatePark",
+					"Win64",
+					"Development",
+					"C:\\Users\\Pc\\Documents\\Unreal Projects\\SkatePark\\SkatePark.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "D:\\Epic Games\\UE_5.4"
+				}
+			},
+			{
+				"label": "SkatePark Win64 Test Build",
+				"group": "build",
+				"command": "Engine\\Build\\BatchFiles\\Build.bat",
+				"args": [
+					"SkatePark",
+					"Win64",
+					"Test",
+					"C:\\Users\\Pc\\Documents\\Unreal Projects\\SkatePark\\SkatePark.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "D:\\Epic Games\\UE_5.4"
+				}
+			},
+			{
+				"label": "SkatePark Win64 Test Rebuild",
+				"group": "build",
+				"command": "Engine\\Build\\BatchFiles\\Build.bat",
+				"args": [
+					"SkatePark",
+					"Win64",
+					"Test",
+					"C:\\Users\\Pc\\Documents\\Unreal Projects\\SkatePark\\SkatePark.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"SkatePark Win64 Test Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "D:\\Epic Games\\UE_5.4"
+				}
+			},
+			{
+				"label": "SkatePark Win64 Test Clean",
+				"group": "build",
+				"command": "Engine\\Build\\BatchFiles\\Clean.bat",
+				"args": [
+					"SkatePark",
+					"Win64",
+					"Test",
+					"C:\\Users\\Pc\\Documents\\Unreal Projects\\SkatePark\\SkatePark.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "D:\\Epic Games\\UE_5.4"
+				}
+			},
+			{
+				"label": "SkatePark Win64 Shipping Build",
+				"group": "build",
+				"command": "Engine\\Build\\BatchFiles\\Build.bat",
+				"args": [
+					"SkatePark",
+					"Win64",
+					"Shipping",
+					"C:\\Users\\Pc\\Documents\\Unreal Projects\\SkatePark\\SkatePark.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "D:\\Epic Games\\UE_5.4"
+				}
+			},
+			{
+				"label": "SkatePark Win64 Shipping Rebuild",
+				"group": "build",
+				"command": "Engine\\Build\\BatchFiles\\Build.bat",
+				"args": [
+					"SkatePark",
+					"Win64",
+					"Shipping",
+					"C:\\Users\\Pc\\Documents\\Unreal Projects\\SkatePark\\SkatePark.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"SkatePark Win64 Shipping Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "D:\\Epic Games\\UE_5.4"
+				}
+			},
+			{
+				"label": "SkatePark Win64 Shipping Clean",
+				"group": "build",
+				"command": "Engine\\Build\\BatchFiles\\Clean.bat",
+				"args": [
+					"SkatePark",
+					"Win64",
+					"Shipping",
+					"C:\\Users\\Pc\\Documents\\Unreal Projects\\SkatePark\\SkatePark.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "D:\\Epic Games\\UE_5.4"
+				}
+			},
+			{
+				"label": "SkateParkEditor Win64 Debug Build",
+				"group": "build",
+				"command": "Engine\\Build\\BatchFiles\\Build.bat",
+				"args": [
+					"SkateParkEditor",
+					"Win64",
+					"Debug",
+					"C:\\Users\\Pc\\Documents\\Unreal Projects\\SkatePark\\SkatePark.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "D:\\Epic Games\\UE_5.4"
+				}
+			},
+			{
+				"label": "SkateParkEditor Win64 Debug Rebuild",
+				"group": "build",
+				"command": "Engine\\Build\\BatchFiles\\Build.bat",
+				"args": [
+					"SkateParkEditor",
+					"Win64",
+					"Debug",
+					"C:\\Users\\Pc\\Documents\\Unreal Projects\\SkatePark\\SkatePark.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"SkateParkEditor Win64 Debug Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "D:\\Epic Games\\UE_5.4"
+				}
+			},
+			{
+				"label": "SkateParkEditor Win64 Debug Clean",
+				"group": "build",
+				"command": "Engine\\Build\\BatchFiles\\Clean.bat",
+				"args": [
+					"SkateParkEditor",
+					"Win64",
+					"Debug",
+					"C:\\Users\\Pc\\Documents\\Unreal Projects\\SkatePark\\SkatePark.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "D:\\Epic Games\\UE_5.4"
+				}
+			},
+			{
+				"label": "SkateParkEditor Win64 DebugGame Build",
+				"group": "build",
+				"command": "Engine\\Build\\BatchFiles\\Build.bat",
+				"args": [
+					"SkateParkEditor",
+					"Win64",
+					"DebugGame",
+					"C:\\Users\\Pc\\Documents\\Unreal Projects\\SkatePark\\SkatePark.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "D:\\Epic Games\\UE_5.4"
+				}
+			},
+			{
+				"label": "SkateParkEditor Win64 DebugGame Rebuild",
+				"group": "build",
+				"command": "Engine\\Build\\BatchFiles\\Build.bat",
+				"args": [
+					"SkateParkEditor",
+					"Win64",
+					"DebugGame",
+					"C:\\Users\\Pc\\Documents\\Unreal Projects\\SkatePark\\SkatePark.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"SkateParkEditor Win64 DebugGame Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "D:\\Epic Games\\UE_5.4"
+				}
+			},
+			{
+				"label": "SkateParkEditor Win64 DebugGame Clean",
+				"group": "build",
+				"command": "Engine\\Build\\BatchFiles\\Clean.bat",
+				"args": [
+					"SkateParkEditor",
+					"Win64",
+					"DebugGame",
+					"C:\\Users\\Pc\\Documents\\Unreal Projects\\SkatePark\\SkatePark.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "D:\\Epic Games\\UE_5.4"
+				}
+			},
+			{
+				"label": "SkateParkEditor Win64 Development Build",
+				"group": "build",
+				"command": "Engine\\Build\\BatchFiles\\Build.bat",
+				"args": [
+					"SkateParkEditor",
+					"Win64",
+					"Development",
+					"C:\\Users\\Pc\\Documents\\Unreal Projects\\SkatePark\\SkatePark.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "D:\\Epic Games\\UE_5.4"
+				}
+			},
+			{
+				"label": "SkateParkEditor Win64 Development Rebuild",
+				"group": "build",
+				"command": "Engine\\Build\\BatchFiles\\Build.bat",
+				"args": [
+					"SkateParkEditor",
+					"Win64",
+					"Development",
+					"C:\\Users\\Pc\\Documents\\Unreal Projects\\SkatePark\\SkatePark.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"SkateParkEditor Win64 Development Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "D:\\Epic Games\\UE_5.4"
+				}
+			},
+			{
+				"label": "SkateParkEditor Win64 Development Clean",
+				"group": "build",
+				"command": "Engine\\Build\\BatchFiles\\Clean.bat",
+				"args": [
+					"SkateParkEditor",
+					"Win64",
+					"Development",
+					"C:\\Users\\Pc\\Documents\\Unreal Projects\\SkatePark\\SkatePark.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "D:\\Epic Games\\UE_5.4"
+				}
+			}
+		]
+	},
+	"launch": {
+		"version": "0.2.0",
+		"configurations": [
+			{
+				"name": "Launch SkatePark (Debug)",
+				"request": "launch",
+				"program": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SkatePark\\Binaries\\Win64\\UnrealGame-Win64-Debug.exe",
+				"preLaunchTask": "SkatePark Win64 Debug Build",
+				"args": [
+				],
+				"cwd": "D:\\Epic Games\\UE_5.4",
+				"stopAtEntry": false,
+				"console": "integratedTerminal",
+				"type": "cppvsdbg",
+				"visualizerFile": "D:\\Epic Games\\UE_5.4\\Engine\\Extras\\VisualStudioDebugging\\Unreal.natvis",
+				"sourceFileMap": {
+					"D:\\build\\++UE5\\Sync": "D:\\Epic Games\\UE_5.4"
+				}
+			},
+			{
+				"name": "Launch SkatePark (DebugGame)",
+				"request": "launch",
+				"program": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SkatePark\\Binaries\\Win64\\UnrealGame-Win64-DebugGame.exe",
+				"preLaunchTask": "SkatePark Win64 DebugGame Build",
+				"args": [
+				],
+				"cwd": "D:\\Epic Games\\UE_5.4",
+				"stopAtEntry": false,
+				"console": "integratedTerminal",
+				"type": "cppvsdbg",
+				"visualizerFile": "D:\\Epic Games\\UE_5.4\\Engine\\Extras\\VisualStudioDebugging\\Unreal.natvis",
+				"sourceFileMap": {
+					"D:\\build\\++UE5\\Sync": "D:\\Epic Games\\UE_5.4"
+				}
+			},
+			{
+				"name": "Launch SkatePark (Development)",
+				"request": "launch",
+				"program": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SkatePark\\Binaries\\Win64\\UnrealGame.exe",
+				"preLaunchTask": "SkatePark Win64 Development Build",
+				"args": [
+				],
+				"cwd": "D:\\Epic Games\\UE_5.4",
+				"stopAtEntry": false,
+				"console": "integratedTerminal",
+				"type": "cppvsdbg",
+				"visualizerFile": "D:\\Epic Games\\UE_5.4\\Engine\\Extras\\VisualStudioDebugging\\Unreal.natvis",
+				"sourceFileMap": {
+					"D:\\build\\++UE5\\Sync": "D:\\Epic Games\\UE_5.4"
+				}
+			},
+			{
+				"name": "Launch SkatePark (Test)",
+				"request": "launch",
+				"program": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SkatePark\\Binaries\\Win64\\UnrealGame-Win64-Test.exe",
+				"preLaunchTask": "SkatePark Win64 Test Build",
+				"args": [
+				],
+				"cwd": "D:\\Epic Games\\UE_5.4",
+				"stopAtEntry": false,
+				"console": "integratedTerminal",
+				"type": "cppvsdbg",
+				"visualizerFile": "D:\\Epic Games\\UE_5.4\\Engine\\Extras\\VisualStudioDebugging\\Unreal.natvis",
+				"sourceFileMap": {
+					"D:\\build\\++UE5\\Sync": "D:\\Epic Games\\UE_5.4"
+				}
+			},
+			{
+				"name": "Launch SkatePark (Shipping)",
+				"request": "launch",
+				"program": "C:\\Users\\Pc\\Documents\\Unreal Projects\\SkatePark\\Binaries\\Win64\\UnrealGame-Win64-Shipping.exe",
+				"preLaunchTask": "SkatePark Win64 Shipping Build",
+				"args": [
+				],
+				"cwd": "D:\\Epic Games\\UE_5.4",
+				"stopAtEntry": false,
+				"console": "integratedTerminal",
+				"type": "cppvsdbg",
+				"visualizerFile": "D:\\Epic Games\\UE_5.4\\Engine\\Extras\\VisualStudioDebugging\\Unreal.natvis",
+				"sourceFileMap": {
+					"D:\\build\\++UE5\\Sync": "D:\\Epic Games\\UE_5.4"
+				}
+			},
+			{
+				"name": "Launch SkateParkEditor (Debug)",
+				"request": "launch",
+				"program": "D:\\Epic Games\\UE_5.4\\Engine\\Binaries\\Win64\\UnrealEditor-Win64-Debug.exe",
+				"preLaunchTask": "SkateParkEditor Win64 Debug Build",
+				"args": [
+					"C:\\Users\\Pc\\Documents\\Unreal Projects\\SkatePark\\SkatePark.uproject"
+				],
+				"cwd": "D:\\Epic Games\\UE_5.4",
+				"stopAtEntry": false,
+				"console": "integratedTerminal",
+				"type": "cppvsdbg",
+				"visualizerFile": "D:\\Epic Games\\UE_5.4\\Engine\\Extras\\VisualStudioDebugging\\Unreal.natvis",
+				"sourceFileMap": {
+					"D:\\build\\++UE5\\Sync": "D:\\Epic Games\\UE_5.4"
+				}
+			},
+			{
+				"name": "Launch SkateParkEditor (DebugGame)",
+				"request": "launch",
+				"program": "D:\\Epic Games\\UE_5.4\\Engine\\Binaries\\Win64\\UnrealEditor-Win64-DebugGame.exe",
+				"preLaunchTask": "SkateParkEditor Win64 DebugGame Build",
+				"args": [
+					"C:\\Users\\Pc\\Documents\\Unreal Projects\\SkatePark\\SkatePark.uproject"
+				],
+				"cwd": "D:\\Epic Games\\UE_5.4",
+				"stopAtEntry": false,
+				"console": "integratedTerminal",
+				"type": "cppvsdbg",
+				"visualizerFile": "D:\\Epic Games\\UE_5.4\\Engine\\Extras\\VisualStudioDebugging\\Unreal.natvis",
+				"sourceFileMap": {
+					"D:\\build\\++UE5\\Sync": "D:\\Epic Games\\UE_5.4"
+				}
+			},
+			{
+				"name": "Launch SkateParkEditor (Development)",
+				"request": "launch",
+				"program": "D:\\Epic Games\\UE_5.4\\Engine\\Binaries\\Win64\\UnrealEditor.exe",
+				"preLaunchTask": "SkateParkEditor Win64 Development Build",
+				"args": [
+					"C:\\Users\\Pc\\Documents\\Unreal Projects\\SkatePark\\SkatePark.uproject"
+				],
+				"cwd": "D:\\Epic Games\\UE_5.4",
+				"stopAtEntry": false,
+				"console": "integratedTerminal",
+				"type": "cppvsdbg",
+				"visualizerFile": "D:\\Epic Games\\UE_5.4\\Engine\\Extras\\VisualStudioDebugging\\Unreal.natvis",
+				"sourceFileMap": {
+					"D:\\build\\++UE5\\Sync": "D:\\Epic Games\\UE_5.4"
+				}
+			},
+			{
+				"name": "Generate Project Files",
+				"type": "coreclr",
+				"request": "launch",
+				"preLaunchTask": "UnrealBuildTool Win64 Development Build",
+				"program": "D:\\Epic Games\\UE_5.4\\Engine\\Build\\BatchFiles\\RunUBT.bat",
+				"args": [
+					"-projectfiles",
+					"-vscode",
+					"-project=C:\\Users\\Pc\\Documents\\Unreal Projects\\SkatePark\\SkatePark.uproject",
+					"-game",
+					"-engine",
+					"-dotnet"
+				],
+				"console": "integratedTerminal",
+				"stopAtEntry": false,
+				"cwd": "D:\\Epic Games\\UE_5.4"
+			}
+		]
+	}
+}
