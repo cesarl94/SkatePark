@@ -10,7 +10,7 @@ The first 4 hours of development. In that time I've implemented:
 * Added camera control with the mouse
 * Added an impulse when you press up
 <img src="Docs/Screenshots/VideoA.webp">
----
+
 ### Copa America night update! <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Telegram-Animated-Emojis/main/Flags/Flag%20Argentina.webp" width="35" height="35"/>
 These past 6 hours I've been struggling a lot with Mixamo's animation root motion. I had to edit the animations in Blender to add the root bone, and when I solved the movement, a new and worse enemy appeared: the skateboard.
 
