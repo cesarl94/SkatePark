@@ -19,3 +19,12 @@ The solution: add the skateboard mesh as part of the character and a new dedicat
 I should clarify that although I have experience in Blender, animations are something I always avoided doing and therefore never learned. Today I needed it and learned something new. Fortunately, I know the tool well enough to move forward with a bit of creativity.
 <img src="Docs/Screenshots/VideoB.webp">
 
+### Wednesday night update:
+Today I added about 4 to 5 hours of work... in that time:
+* I moved all the logic to C++. For now, it's just a class that inherits from Character.
+* I added the CustomEditor module to facilitate variable search tasks.
+* I battled against a corrupt Blueprint and fixed it by installing BPCorruptionFix.
+* I significantly improved the steering. It still feels quite stiff, but it’s much more natural than before.
+* Bug fixed: Rotating the camera no longer alters the direction in which the character moves.
+* I removed collisions from bushes that were just getting in the way.
+<img src="Docs/Screenshots/VideoC.webp">
