@@ -12,18 +12,18 @@ UCLASS()
 class SKATEPARK_API ASkater : public ACharacter {
 	GENERATED_BODY()
 
-public:
-	ASkater(const FObjectInitializer &ObjectInitializer);
-
+private:
 	void OnLookInput(const FInputActionValue &Value);
 	void OnSteerInput(const FInputActionValue &Value);
 	void OnImpulseInput(const FInputActionValue &Value);
 	void OnJumpInput(const FInputActionValue &Value);
 
-protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
+	void ComputeSteer(float DeltaTime);
 
+	bool IsStopped{true};
+
+
+protected:
 	// Default values:
 
 	// MappingContext for player input
@@ -50,6 +50,13 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Skate Defaults")
 	float ImpulseMagnitude{1024};
 
+	UPROPERTY(EditDefaultsOnly, Category = "Skate Defaults")
+	float TurnForce{15};
+
+	// In centimeters per second
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Skate Defaults")
+	float MinimumVelocityBeforeStop{100};
+
 	// Components:
 	UPROPERTY(VisibleAnywhere)
 	class USpringArmComponent *CameraSpringArm;
@@ -57,14 +64,22 @@ protected:
 	UPROPERTY(VisibleAnywhere)
 	class UCameraComponent *Camera;
 
+	// Private with blueprint access:
+
+	UPROPERTY(BlueprintReadOnly, Category = "Skate")
+	float SteeringValue;
+
 public:
-	// Called every frame
+	ASkater(const FObjectInitializer &ObjectInitializer);
+
 	virtual void Tick(float DeltaTime) override;
 
-	// Called to bind functionality to input
+	// Called to bind functionality to input. See https://unrealcommunity.wiki/using-the-enhancedinput-system-in-c++-74b72b
 	virtual void SetupPlayerInputComponent(class UInputComponent *PlayerInputComponent) override;
 
-	UFUNCTION(BlueprintCallable, Category = "Skater", Meta = (CompactNodeTitle = "Movement Component"))
+	// Components getters:
+
+	UFUNCTION(BlueprintCallable, Category = "Skater|Components", Meta = (CompactNodeTitle = "Movement Component"))
 	class USkateMovementComponent *GetSkateMovementComponent() const;
 
 	// Implementable Events:
