@@ -10,6 +10,7 @@
 #include "Kismet/KismetSystemLibrary.h"
 #include "Math/Rotator.h"
 #include "Math/Vector2D.h"
+#include "Utils/MathUtils.h"
 
 
 void ASkater::OnLookInput(const FInputActionValue &Value) {
@@ -64,6 +65,14 @@ void ASkater::OnJumpInput(const FInputActionValue &Value) {
 	K2_StartJumpAnimation();
 }
 
+void ASkater::OnStopInput(const FInputActionValue &Value) {
+	IsTryingToStop = Value.Get<bool>();
+
+	if (!IsStopped && !GetSkateMovementComponent()->IsFalling()) {
+		K2_StartStopAnimation();
+	}
+}
+
 void ASkater::ComputeSteer(float DeltaTime) {
 
 	USkateMovementComponent *SkateMovementComponent = GetSkateMovementComponent();
@@ -81,6 +90,12 @@ void ASkater::ComputeSteer(float DeltaTime) {
 	}
 }
 
+void ASkater::BeginPlay() {
+	Super::BeginPlay();
+
+	StopForceHalfLife = UMathUtils::CalculateSmoothLerpHalfLife(60, StopForce);
+}
+
 ASkater::ASkater(const FObjectInitializer &ObjectInitializer) : Super(ObjectInitializer.SetDefaultSubobjectClass<USkateMovementComponent>(CharacterMovementComponentName)) {
 	PrimaryActorTick.bCanEverTick = true;
 
@@ -95,11 +110,16 @@ void ASkater::Tick(float DeltaTime) {
 	ComputeSteer(DeltaTime);
 
 	USkateMovementComponent *SkateMovementComponent = GetSkateMovementComponent();
+	float StopSmoothLerpAlpha = UMathUtils::GetSmoothLerpAlpha(DeltaTime, StopForceHalfLife);
 
 	float VelocitySqrMagnitude = SkateMovementComponent->Velocity.SizeSquared();
-	if (VelocitySqrMagnitude < MinimumVelocityBeforeStop * MinimumVelocityBeforeStop) {
+	bool IsVelocityTooSmall = VelocitySqrMagnitude < MinimumVelocityBeforeStop * MinimumVelocityBeforeStop;
+	if (IsVelocityTooSmall) {
+		IsStopped = true;
+	}
+	if (IsVelocityTooSmall || (IsTryingToStop && !SkateMovementComponent->IsFalling())) {
 		// We apply an extra break when the velocity is small
-		SkateMovementComponent->Velocity *= 0.9f;
+		SkateMovementComponent->Velocity = FMath::Lerp(FVector::ZeroVector, SkateMovementComponent->Velocity, StopSmoothLerpAlpha);
 	}
 
 
@@ -121,6 +141,7 @@ void ASkater::SetupPlayerInputComponent(UInputComponent *PlayerInputComponent) {
 	Input->BindAction(JumpAction, ETriggerEvent::Triggered, this, &ASkater::OnJumpInput);
 	Input->BindAction(SteerAction, ETriggerEvent::Completed, this, &ASkater::OnSteerInput);
 	Input->BindAction(SteerAction, ETriggerEvent::Triggered, this, &ASkater::OnSteerInput);
+	Input->BindAction(StopAction, ETriggerEvent::Triggered, this, &ASkater::OnStopInput);
 }
 
 USkateMovementComponent *ASkater::GetSkateMovementComponent() const { return Cast<USkateMovementComponent>(GetCharacterMovement()); }

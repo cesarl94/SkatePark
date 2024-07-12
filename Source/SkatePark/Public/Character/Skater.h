@@ -17,13 +17,18 @@ private:
 	void OnSteerInput(const FInputActionValue &Value);
 	void OnImpulseInput(const FInputActionValue &Value);
 	void OnJumpInput(const FInputActionValue &Value);
+	void OnStopInput(const FInputActionValue &Value);
 
 	void ComputeSteer(float DeltaTime);
 
 	bool IsStopped{true};
+	bool IsTryingToStop{false};
 
+	float StopForceHalfLife;
 
 protected:
+	virtual void BeginPlay() override;
+
 	// Default values:
 
 	// MappingContext for player input
@@ -42,6 +47,9 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Inputs")
 	class UInputAction *JumpAction;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Inputs")
+	class UInputAction *StopAction;
+
 	// A multiplier to transform the delta of the mouse in pitch and yaw respectively
 	UPROPERTY(EditDefaultsOnly, Category = "Skate Defaults")
 	float LookForce{3};
@@ -52,6 +60,10 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Skate Defaults")
 	float TurnForce{15};
+
+	// Used as LinearStep
+	UPROPERTY(EditDefaultsOnly, Category = "Skate Defaults")
+	float StopForce{0.9};
 
 	// In centimeters per second
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Skate Defaults")
@@ -89,4 +101,7 @@ public:
 
 	UFUNCTION(BlueprintImplementableEvent, Category = "Skater", DisplayName = "StartImpulseAnimation")
 	void K2_StartImpulseAnimation();
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "Skater", DisplayName = "StartStopAnimation")
+	void K2_StartStopAnimation();
 };
