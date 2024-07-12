@@ -34,7 +34,7 @@ void ASkater::OnImpulseInput(const FInputActionValue &Value) {
 
 	USkateMovementComponent *SkateMovementComponent = GetSkateMovementComponent();
 
-	if (SkateMovementComponent->MovementMode == MOVE_Walking) {
+	if (!SkateMovementComponent->IsFalling()) {
 		FVector Forward = GetActorForwardVector();
 		SkateMovementComponent->AddImpulse(Forward * ImpulseMagnitude, true);
 
@@ -68,8 +68,16 @@ void ASkater::OnJumpInput(const FInputActionValue &Value) {
 void ASkater::OnStopInput(const FInputActionValue &Value) {
 	IsTryingToStop = Value.Get<bool>();
 
-	if (!IsStopped && !GetSkateMovementComponent()->IsFalling()) {
-		K2_StartStopAnimation();
+	if (IsTryingToStop && !GetSkateMovementComponent()->IsFalling()) {
+		if (IsStopped) {
+			FVector Forward = GetActorForwardVector();
+			GetSkateMovementComponent()->AddImpulse(Forward * BackflipImpulse, true);
+
+			// We trigger the animation from blueprints
+			K2_StartBackflipAnimation();
+		} else {
+			K2_StartStopAnimation();
+		}
 	}
 }
 
@@ -78,7 +86,7 @@ void ASkater::ComputeSteer(float DeltaTime) {
 	USkateMovementComponent *SkateMovementComponent = GetSkateMovementComponent();
 
 	// Check if the SteeringValue is non-zero
-	if (SkateMovementComponent->MovementMode == MOVE_Walking && FMath::Abs(SteeringValue) > KINDA_SMALL_NUMBER) {
+	if (!SkateMovementComponent->IsFalling() && FMath::Abs(SteeringValue) > KINDA_SMALL_NUMBER) {
 		float VelocitySqrMagnitude = SkateMovementComponent->Velocity.SizeSquared();
 
 		if (VelocitySqrMagnitude > MinimumVelocityBeforeStop * MinimumVelocityBeforeStop) {

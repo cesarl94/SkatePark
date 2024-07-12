@@ -59,11 +59,22 @@ protected:
 	float ImpulseMagnitude{1024};
 
 	UPROPERTY(EditDefaultsOnly, Category = "Skate Defaults")
+	float BackflipImpulse{-250};
+
+	UPROPERTY(EditDefaultsOnly, Category = "Skate Defaults")
 	float TurnForce{15};
 
 	// Used as LinearStep
 	UPROPERTY(EditDefaultsOnly, Category = "Skate Defaults")
 	float StopForce{0.9};
+
+	// This is the initial velocity in Z when we jump. Try to avoid put a value that allow you to leave from safe zone of the game
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Skate Defaults")
+	float JumpZForce{900};
+
+	// This is the initial velocity in Z when we make a backflip. Try to avoid put a value higher to JumpZForce to avoid reach high places
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Skate Defaults")
+	float BackflipZForce{400};
 
 	// In centimeters per second
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Skate Defaults")
@@ -104,4 +115,7 @@ public:
 
 	UFUNCTION(BlueprintImplementableEvent, Category = "Skater", DisplayName = "StartStopAnimation")
 	void K2_StartStopAnimation();
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "Skater", DisplayName = "StartBackflipAnimation")
+	void K2_StartBackflipAnimation();
 };
