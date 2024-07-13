@@ -32,3 +32,25 @@ Today I added about 4 to 5 hours of work... in that time:
 ### Thursday night update:
 Today I added about 5 hours of work just designing the level. I thought it would take less time, but there's a lot of trial and error involved.
 <img src="Docs/Screenshots/VideoD.webp">
+
+### Finally Friday! Last night!
+
+Today I finished this technical assessment. I logged about 7 hours, during which time:
+* I added the collectables and scattered them across the map
+* Implemented the braking mechanic
+* Enhanced maneuverability and fixed some bugs that caused the character to get stuck in different parts of the map
+* Improved collisions with the environment
+* And the cherry on top: Added the Backflip as a mechanic to step backwards.
+* I also spent time creating the technical assessment report document
+
+You can watch a video of the final result of this technical assessment:
+[![VideoGameplay](Docs/Screenshots/VideoMiniature.png)](https://youtu.be/2dbU3VthRzw)
+
+### 📞 Contact
+If you have any questions, feel free to reach out to me.
+* My email is <lorenzon.cesar@hotmail.com>
+* LinkedIn, Discord, YouTube channel and more on [my LinkTree](https://linktr.ee/lorenzoncesar). 
+
+*César Javier Lorenzon, Game Developer*.
+
+### Now, time to rest! 😴
