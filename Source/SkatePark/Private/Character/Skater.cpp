@@ -1,7 +1,9 @@
 #include "Character/Skater.h"
 
+#include "Actors/Collectable.h"
 #include "Camera/CameraComponent.h"
 #include "Character/SkateMovementComponent.h"
+#include "Components/CapsuleComponent.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "GameFramework/SpringArmComponent.h"
@@ -12,6 +14,13 @@
 #include "Math/Vector2D.h"
 #include "Utils/MathUtils.h"
 
+void ASkater::OnCapsuleBeginOverlap(UPrimitiveComponent *OverlappedComponent, AActor *OtherActor, UPrimitiveComponent *OtherComp, int32 OtherBodyIndex, bool FromSweep, const FHitResult &SweepResult) {
+	if (ACollectable *Collectable = Cast<ACollectable>(OtherActor)) {
+		Collectable->Collect();
+		CollectablesCount++;
+		OnCollectCollectable.Broadcast(CollectablesCount);
+	}
+}
 
 void ASkater::OnLookInput(const FInputActionValue &Value) {
 	FVector2D Axis2DValue = Value.Get<FVector2D>();
@@ -112,6 +121,8 @@ ASkater::ASkater(const FObjectInitializer &ObjectInitializer) : Super(ObjectInit
 
 	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
 	Camera->SetupAttachment(CameraSpringArm);
+
+	GetCapsuleComponent()->OnComponentBeginOverlap.AddUniqueDynamic(this, &ASkater::OnCapsuleBeginOverlap);
 }
 
 void ASkater::Tick(float DeltaTime) {
@@ -151,5 +162,7 @@ void ASkater::SetupPlayerInputComponent(UInputComponent *PlayerInputComponent) {
 	Input->BindAction(SteerAction, ETriggerEvent::Triggered, this, &ASkater::OnSteerInput);
 	Input->BindAction(StopAction, ETriggerEvent::Triggered, this, &ASkater::OnStopInput);
 }
+
+int32 ASkater::GetCollectablesCount() const { return CollectablesCount; }
 
 USkateMovementComponent *ASkater::GetSkateMovementComponent() const { return Cast<USkateMovementComponent>(GetCharacterMovement()); }

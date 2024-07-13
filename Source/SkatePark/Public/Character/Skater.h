@@ -7,12 +7,16 @@
 
 #include "Skater.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnCollectCollectable, int32, CollectablesCount);
 
 UCLASS()
 class SKATEPARK_API ASkater : public ACharacter {
 	GENERATED_BODY()
 
 private:
+	UFUNCTION()
+	void OnCapsuleBeginOverlap(UPrimitiveComponent *OverlappedComponent, AActor *OtherActor, UPrimitiveComponent *OtherComp, int32 OtherBodyIndex, bool FromSweep, const FHitResult &SweepResult);
+
 	void OnLookInput(const FInputActionValue &Value);
 	void OnSteerInput(const FInputActionValue &Value);
 	void OnImpulseInput(const FInputActionValue &Value);
@@ -25,6 +29,8 @@ private:
 	bool IsTryingToStop{false};
 
 	float StopForceHalfLife;
+
+	int32 CollectablesCount{0};
 
 protected:
 	virtual void BeginPlay() override;
@@ -100,6 +106,9 @@ public:
 	// Called to bind functionality to input. See https://unrealcommunity.wiki/using-the-enhancedinput-system-in-c++-74b72b
 	virtual void SetupPlayerInputComponent(class UInputComponent *PlayerInputComponent) override;
 
+	UFUNCTION(BlueprintCallable, Category = "Skater", Meta = (CompactNodeTitle = "Collectables Count"))
+	int32 GetCollectablesCount() const;
+
 	// Components getters:
 
 	UFUNCTION(BlueprintCallable, Category = "Skater|Components", Meta = (CompactNodeTitle = "Movement Component"))
@@ -118,4 +127,9 @@ public:
 
 	UFUNCTION(BlueprintImplementableEvent, Category = "Skater", DisplayName = "StartBackflipAnimation")
 	void K2_StartBackflipAnimation();
+
+	// Events:
+
+	UPROPERTY(BlueprintAssignable, VisibleAnywhere, Category = "Skater|Events")
+	FOnCollectCollectable OnCollectCollectable;
 };

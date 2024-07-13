@@ -9,6 +9,8 @@
 
 #include "SkateMovementComponent.generated.h"
 
+// I've used this class but I can't use it now because the component data in the Blueprint causes corruption :)
+// I have few time to worry about fixing this.
 
 UCLASS()
 class SKATEPARK_API USkateMovementComponent : public UCharacterMovementComponent {

@@ -11,7 +11,11 @@
 	],
 	"settings": {
 		"typescript.tsc.autoDetect": "off",
-		"npm.autoDetect": "off"
+		"npm.autoDetect": "off",
+		"files.associations": {
+			"*.txt": "plaintext",
+			"*.rh": "cpp"
+		}
 	},
 	"extensions": {
 		"recommendations": [
