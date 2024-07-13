@@ -51,15 +51,6 @@ void ASkater::OnImpulseInput(const FInputActionValue &Value) {
 		// We trigger the animation from blueprints
 		K2_StartImpulseAnimation();
 		IsStopped = false;
-
-		// float MaxSpeed = SkateMovementComponent->GetMaxSpeed();
-		// if (SkateMovementComponent->IsExceedingMaxSpeed(MaxSpeed)) {
-		// 	FVector VelocityDirection2D = SkateMovementComponent->Velocity.GetSafeNormal2D();
-		// 	FVector NewVelocity2D = VelocityDirection2D * MaxSpeed;
-
-		// 	SkateMovementComponent->Velocity = NewVelocity2D;
-		// 	UKismetSystemLibrary::PrintString(GetWorld(), FString::Printf(TEXT("MaxSpeed: %f, NewVelocity: %f"), MaxSpeed, NewVelocity2D.Size()), true, true, FColor::Blue, 5);
-		// }
 	}
 }
 
@@ -82,6 +73,9 @@ void ASkater::OnStopInput(const FInputActionValue &Value) {
 	if (IsTryingToStop && !GetSkateMovementComponent()->IsFalling()) {
 		if (IsStopped) {
 			FVector Forward = GetActorForwardVector();
+			UKismetSystemLibrary::PrintString(GetWorld(), FString::Printf(TEXT("Forward: %s, Impulse: %s"), *(Forward.ToString()), *((Forward * BackflipImpulse).ToString())), true, true, FColor::Red,
+											  5);
+
 			GetSkateMovementComponent()->AddImpulse(Forward * BackflipImpulse, true);
 
 			// We trigger the animation from blueprints
@@ -106,6 +100,8 @@ void ASkater::ComputeSteer(float DeltaTime) {
 
 			AddControllerYawInput(RotationDelta);
 			SkateMovementComponent->Velocity = GetActorForwardVector() * VelocityMagnitude;
+		} else if (IsStuck) {
+			AddControllerYawInput(SteeringValue * DeltaTime * SteerForceWhenYouAreStuck);
 		}
 	}
 }
@@ -139,6 +135,31 @@ void ASkater::CheckMaxSpeed() {
 	}
 }
 
+void ASkater::CheckStuck() {
+	// Get the character's location and direction
+	FVector StartLocation = GetActorLocation() - FVector(0, 0, GetCapsuleComponent()->GetUnscaledCapsuleHalfHeight() * 0.5f);
+	FVector ForwardVector = GetActorForwardVector();
+	FVector LeftVector = ForwardVector.RotateAngleAxis(-20.0f, FVector(0, 0, 1));
+	FVector RightVector = ForwardVector.RotateAngleAxis(20.0f, FVector(0, 0, 1));
+
+	FVector EndLocationForward = StartLocation + (ForwardVector * CheckStuckRayDistance);
+	FVector EndLocationLeft = StartLocation + (LeftVector * CheckStuckRayDistance);
+	FVector EndLocationRight = StartLocation + (RightVector * CheckStuckRayDistance);
+
+	// Define collision parameters
+	FCollisionQueryParams CollisionParams;
+	CollisionParams.AddIgnoredActor(this); // Ignore the character itself
+
+	// Perform the ray trace
+	FHitResult OutHit;
+	bool bHitForward = GetWorld()->LineTraceSingleByChannel(OutHit, StartLocation, EndLocationForward, ECC_Visibility, CollisionParams);
+	bool bHitLeft = GetWorld()->LineTraceSingleByChannel(OutHit, StartLocation, EndLocationLeft, ECC_Visibility, CollisionParams);
+	bool bHitRight = GetWorld()->LineTraceSingleByChannel(OutHit, StartLocation, EndLocationRight, ECC_Visibility, CollisionParams);
+
+	// Update the boolean IsStuck based on the results of the ray traces
+	IsStuck = bHitForward || bHitLeft || bHitRight;
+}
+
 void ASkater::BeginPlay() {
 	Super::BeginPlay();
 
@@ -159,8 +180,11 @@ ASkater::ASkater(const FObjectInitializer &ObjectInitializer) : Super(ObjectInit
 
 void ASkater::Tick(float DeltaTime) {
 	CheckMaxSpeed();
+	CheckStuck();
+
 	ComputeSteer(DeltaTime);
 	ComputeStop(DeltaTime);
+
 
 	Super::Tick(DeltaTime);
 }

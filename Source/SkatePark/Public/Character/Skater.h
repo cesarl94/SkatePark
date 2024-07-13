@@ -22,6 +22,8 @@ private:
 
 	int32 CollectablesCount{0};
 
+	bool IsStuck{false};
+
 	UFUNCTION()
 	void OnCapsuleBeginOverlap(UPrimitiveComponent *OverlappedComponent, AActor *OtherActor, UPrimitiveComponent *OtherComp, int32 OtherBodyIndex, bool FromSweep, const FHitResult &SweepResult);
 
@@ -37,6 +39,8 @@ private:
 	void ComputeStop(float DeltaTime);
 
 	void CheckMaxSpeed();
+
+	void CheckStuck();
 
 
 protected:
@@ -75,10 +79,6 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Skate Defaults")
 	float BackflipImpulse{-250};
 
-	// This value is to balance the steering force
-	UPROPERTY(EditDefaultsOnly, Category = "Skate Defaults")
-	float SteerForce{15};
-
 	// Used to reduce speed with a SmoothLerp. If it is 1, the speed will remain the same; if it is 0, it will stop immediately.
 	UPROPERTY(EditDefaultsOnly, Category = "Skate Defaults")
 	float StopForce{0.9};
@@ -102,6 +102,13 @@ protected:
 	// Steering force applied when speed is at maximum
 	UPROPERTY(EditDefaultsOnly, Category = "Skate Defaults")
 	float SteerForceAtSpeedRatio1{15};
+
+	// In centimeters
+	UPROPERTY(EditDefaultsOnly, Category = "Skate Defaults")
+	float CheckStuckRayDistance{100.f};
+
+	UPROPERTY(EditDefaultsOnly, Category = "Skate Defaults")
+	float SteerForceWhenYouAreStuck{30};
 
 	// Components:
 	UPROPERTY(VisibleAnywhere)
