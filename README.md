@@ -28,3 +28,7 @@ Today I added about 4 to 5 hours of work... in that time:
 * Bug fixed: Rotating the camera no longer alters the direction in which the character moves.
 * I removed collisions from bushes that were just getting in the way.
 <img src="Docs/Screenshots/VideoC.webp">
+
+### Thursday night update:
+Today I added about 5 hours of work just designing the level. I thought it would take less time, but there's a lot of trial and error involved.
+<img src="Docs/Screenshots/VideoD.webp">

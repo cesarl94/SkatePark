@@ -73,8 +73,6 @@ void ASkater::OnStopInput(const FInputActionValue &Value) {
 	if (IsTryingToStop && !GetSkateMovementComponent()->IsFalling()) {
 		if (IsStopped) {
 			FVector Forward = GetActorForwardVector();
-			UKismetSystemLibrary::PrintString(GetWorld(), FString::Printf(TEXT("Forward: %s, Impulse: %s"), *(Forward.ToString()), *((Forward * BackflipImpulse).ToString())), true, true, FColor::Red,
-											  5);
 
 			GetSkateMovementComponent()->AddImpulse(Forward * BackflipImpulse, true);
 

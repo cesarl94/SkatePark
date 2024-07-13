@@ -19,18 +19,6 @@ ACollectable::ACollectable() {
 	Collider->SetupAttachment(NewRoot);
 }
 
-// void ACollectable::BeginPlay()
-// {
-// 	Super::BeginPlay();
-
-// }
-
-// void ACollectable::Tick(float DeltaTime)
-// {
-// 	Super::Tick(DeltaTime);
-
-// }
-
 void ACollectable::Collect() {
 	Collider->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	K2_StartCollectAnimation();
