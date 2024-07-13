@@ -47,17 +47,19 @@ void ASkater::OnImpulseInput(const FInputActionValue &Value) {
 		FVector Forward = GetActorForwardVector();
 		SkateMovementComponent->AddImpulse(Forward * ImpulseMagnitude, true);
 
+
 		// We trigger the animation from blueprints
 		K2_StartImpulseAnimation();
 		IsStopped = false;
 
-		float MaxSpeed = SkateMovementComponent->GetMaxSpeed();
-		if (SkateMovementComponent->IsExceedingMaxSpeed(MaxSpeed)) {
-			FVector VelocityDirection2D = SkateMovementComponent->Velocity.GetSafeNormal2D();
-			FVector NewVelocity2D = VelocityDirection2D * MaxSpeed;
+		// float MaxSpeed = SkateMovementComponent->GetMaxSpeed();
+		// if (SkateMovementComponent->IsExceedingMaxSpeed(MaxSpeed)) {
+		// 	FVector VelocityDirection2D = SkateMovementComponent->Velocity.GetSafeNormal2D();
+		// 	FVector NewVelocity2D = VelocityDirection2D * MaxSpeed;
 
-			SkateMovementComponent->Velocity = NewVelocity2D;
-		}
+		// 	SkateMovementComponent->Velocity = NewVelocity2D;
+		// 	UKismetSystemLibrary::PrintString(GetWorld(), FString::Printf(TEXT("MaxSpeed: %f, NewVelocity: %f"), MaxSpeed, NewVelocity2D.Size()), true, true, FColor::Blue, 5);
+		// }
 	}
 }
 
@@ -91,19 +93,49 @@ void ASkater::OnStopInput(const FInputActionValue &Value) {
 }
 
 void ASkater::ComputeSteer(float DeltaTime) {
-
 	USkateMovementComponent *SkateMovementComponent = GetSkateMovementComponent();
 
 	// Check if the SteeringValue is non-zero
 	if (!SkateMovementComponent->IsFalling() && FMath::Abs(SteeringValue) > KINDA_SMALL_NUMBER) {
-		float VelocitySqrMagnitude = SkateMovementComponent->Velocity.SizeSquared();
+		float VelocityMagnitude = SkateMovementComponent->Velocity.Size();
 
-		if (VelocitySqrMagnitude > MinimumVelocityBeforeStop * MinimumVelocityBeforeStop) {
-			float RotationDelta = SteeringValue * DeltaTime * TurnForce;
+		if (VelocityMagnitude > MinimumVelocityBeforeStop) {
+			float SpeedRatio = VelocityMagnitude / GetSkateMovementComponent()->GetMaxSpeed();
+			float SteerForceInterpolated = FMath::Lerp(SteerForceAtSpeedRatio0, SteerForceAtSpeedRatio1, SpeedRatio);
+			float RotationDelta = SteeringValue * DeltaTime * SteerForceInterpolated;
 
 			AddControllerYawInput(RotationDelta);
-			SkateMovementComponent->Velocity = GetActorForwardVector() * FMath::Sqrt(VelocitySqrMagnitude);
+			SkateMovementComponent->Velocity = GetActorForwardVector() * VelocityMagnitude;
 		}
+	}
+}
+
+void ASkater::ComputeStop(float DeltaTime) {
+	USkateMovementComponent *SkateMovementComponent = GetSkateMovementComponent();
+	float StopSmoothLerpAlpha = UMathUtils::GetSmoothLerpAlpha(DeltaTime, StopForceHalfLife);
+
+	float VelocitySqrMagnitude = SkateMovementComponent->Velocity.SizeSquared();
+	bool IsVelocityTooSmall = VelocitySqrMagnitude < MinimumVelocityBeforeStop * MinimumVelocityBeforeStop;
+	if (IsVelocityTooSmall) {
+		IsStopped = true;
+	}
+	if (IsVelocityTooSmall || (IsTryingToStop && !SkateMovementComponent->IsFalling())) {
+		// We apply an extra break when the velocity is small
+		SkateMovementComponent->Velocity = FMath::Lerp(FVector::ZeroVector, SkateMovementComponent->Velocity, StopSmoothLerpAlpha);
+	}
+}
+
+void ASkater::CheckMaxSpeed() {
+	USkateMovementComponent *SkateMovementComponent = GetSkateMovementComponent();
+
+	float MaxSpeed = SkateMovementComponent->GetMaxSpeed();
+	float CurrentVelocitySquared2D = SkateMovementComponent->Velocity.SizeSquared2D();
+
+	if (CurrentVelocitySquared2D > MaxSpeed * MaxSpeed * 1.01f) {
+		FVector VelocityDirection2D = SkateMovementComponent->Velocity.GetSafeNormal2D();
+		FVector NewVelocity2D = VelocityDirection2D * MaxSpeed;
+
+		SkateMovementComponent->Velocity = NewVelocity2D;
 	}
 }
 
@@ -126,21 +158,9 @@ ASkater::ASkater(const FObjectInitializer &ObjectInitializer) : Super(ObjectInit
 }
 
 void ASkater::Tick(float DeltaTime) {
+	CheckMaxSpeed();
 	ComputeSteer(DeltaTime);
-
-	USkateMovementComponent *SkateMovementComponent = GetSkateMovementComponent();
-	float StopSmoothLerpAlpha = UMathUtils::GetSmoothLerpAlpha(DeltaTime, StopForceHalfLife);
-
-	float VelocitySqrMagnitude = SkateMovementComponent->Velocity.SizeSquared();
-	bool IsVelocityTooSmall = VelocitySqrMagnitude < MinimumVelocityBeforeStop * MinimumVelocityBeforeStop;
-	if (IsVelocityTooSmall) {
-		IsStopped = true;
-	}
-	if (IsVelocityTooSmall || (IsTryingToStop && !SkateMovementComponent->IsFalling())) {
-		// We apply an extra break when the velocity is small
-		SkateMovementComponent->Velocity = FMath::Lerp(FVector::ZeroVector, SkateMovementComponent->Velocity, StopSmoothLerpAlpha);
-	}
-
+	ComputeStop(DeltaTime);
 
 	Super::Tick(DeltaTime);
 }

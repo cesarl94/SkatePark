@@ -14,6 +14,14 @@ class SKATEPARK_API ASkater : public ACharacter {
 	GENERATED_BODY()
 
 private:
+	bool IsStopped{true};
+	// Related to the Input
+	bool IsTryingToStop{false};
+	// Used for the SmoothLerp
+	float StopForceHalfLife;
+
+	int32 CollectablesCount{0};
+
 	UFUNCTION()
 	void OnCapsuleBeginOverlap(UPrimitiveComponent *OverlappedComponent, AActor *OtherActor, UPrimitiveComponent *OtherComp, int32 OtherBodyIndex, bool FromSweep, const FHitResult &SweepResult);
 
@@ -23,14 +31,13 @@ private:
 	void OnJumpInput(const FInputActionValue &Value);
 	void OnStopInput(const FInputActionValue &Value);
 
+	// Process the steering behaviour
 	void ComputeSteer(float DeltaTime);
 
-	bool IsStopped{true};
-	bool IsTryingToStop{false};
+	void ComputeStop(float DeltaTime);
 
-	float StopForceHalfLife;
+	void CheckMaxSpeed();
 
-	int32 CollectablesCount{0};
 
 protected:
 	virtual void BeginPlay() override;
@@ -64,13 +71,15 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Skate Defaults")
 	float ImpulseMagnitude{1024};
 
+	// In centimeters per second
 	UPROPERTY(EditDefaultsOnly, Category = "Skate Defaults")
 	float BackflipImpulse{-250};
 
+	// This value is to balance the steering force
 	UPROPERTY(EditDefaultsOnly, Category = "Skate Defaults")
-	float TurnForce{15};
+	float SteerForce{15};
 
-	// Used as LinearStep
+	// Used to reduce speed with a SmoothLerp. If it is 1, the speed will remain the same; if it is 0, it will stop immediately.
 	UPROPERTY(EditDefaultsOnly, Category = "Skate Defaults")
 	float StopForce{0.9};
 
@@ -82,9 +91,17 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Skate Defaults")
 	float BackflipZForce{400};
 
-	// In centimeters per second
+	// In centimeters per second. If you're going in a lower velocity, you can be consider stopped
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Skate Defaults")
 	float MinimumVelocityBeforeStop{100};
+
+	// Steering force applied when speed is 0
+	UPROPERTY(EditDefaultsOnly, Category = "Skate Defaults")
+	float SteerForceAtSpeedRatio0{30};
+
+	// Steering force applied when speed is at maximum
+	UPROPERTY(EditDefaultsOnly, Category = "Skate Defaults")
+	float SteerForceAtSpeedRatio1{15};
 
 	// Components:
 	UPROPERTY(VisibleAnywhere)
