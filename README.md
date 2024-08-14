@@ -1,4 +1,4 @@
-# Skate Park
+# Skate Park: Finished Technical Assesment
 
 ## Interview Task:
 
@@ -61,12 +61,5 @@ Today I finished this technical assessment. I logged about 7 hours, during which
 
 You can watch a video of the final result of this technical assessment:
 [![VideoGameplay](Docs/Screenshots/VideoMiniature.png)](https://youtu.be/2dbU3VthRzw)
-
-### 📞 Contact
-If you have any questions, feel free to reach out to me.
-* My email is <lorenzon.cesar@hotmail.com>
-* LinkedIn, Discord, YouTube channel and more on [my LinkTree](https://linktr.ee/lorenzoncesar). 
-
-*César Javier Lorenzon, Game Developer*.
 
 ### Now, time to rest! 😴
